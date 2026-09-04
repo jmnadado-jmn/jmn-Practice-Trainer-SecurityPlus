@@ -70,10 +70,60 @@
   .pbq-toggle .pt-text b{color:var(--violet);}
   .pbq-toggle .pt-text{font-size:13.5px;color:var(--ink-dim);}
 
+  .examinee-row{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+  .examinee-row input{
+    flex:1;min-width:140px;padding:11px 12px;border-radius:9px;border:1px solid var(--line);
+    background:var(--panel-2);color:var(--ink);font-family:var(--sans);font-size:14px;
+  }
+  .examinee-row input:focus{outline:none;border-color:var(--teal);}
+  .examinee-note{font-size:12px;color:var(--ink-dim);margin:0 0 20px;line-height:1.5;}
+
   .start-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--teal);color:#04140f;font-weight:700;font-size:15px;cursor:pointer;font-family:var(--sans);transition:.15s;}
   .start-btn:hover{filter:brightness(1.08);}
   .start-btn:disabled{opacity:.5;cursor:not-allowed;filter:none;}
   .err-note{color:var(--coral);font-size:12.5px;font-family:var(--mono);margin:-10px 0 16px;min-height:14px;}
+
+  .history-link-btn{width:100%;padding:12px;margin-top:10px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink-dim);font-weight:600;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.15s;}
+  .history-link-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* history screen */
+  .history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .history-header h2{font-size:20px;margin:0;}
+  .history-back-btn{font-family:var(--mono);font-size:12px;color:var(--ink-dim);background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;}
+  .history-back-btn:hover{color:var(--teal);border-color:var(--teal);}
+  .history-empty{color:var(--ink-dim);font-size:14px;text-align:center;padding:40px 20px;}
+  .history-entry{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .history-entry-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .history-entry-score{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--teal);}
+  .history-entry-meta{font-size:12.5px;color:var(--ink-dim);}
+  .history-entry-sub{font-size:12.5px;color:var(--ink-dim);margin-top:4px;}
+  .history-entry-domains{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+  .history-chip{font-family:var(--mono);font-size:10.5px;padding:3px 8px;border-radius:6px;background:var(--panel);border:1px solid var(--line);color:var(--ink-dim);}
+  .clear-history-btn{width:100%;padding:12px;margin-top:6px;border:1px solid rgba(255,107,107,0.35);border-radius:10px;background:rgba(255,107,107,0.06);color:var(--coral);font-weight:600;font-size:13.5px;cursor:pointer;}
+  .clear-history-btn:hover{background:rgba(255,107,107,0.12);}
+
+  /* share & save box on report */
+  .share-box{margin-top:22px;padding:18px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line);}
+  .share-box h3{margin:0 0 12px;font-size:13px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono);}
+  .share-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .share-row input{flex:1;min-width:160px;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-family:var(--sans);font-size:13.5px;}
+  .share-row input:focus{outline:none;border-color:var(--teal);}
+  .share-btns{display:flex;gap:10px;flex-wrap:wrap;}
+  .share-btn{flex:1;min-width:150px;padding:11px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13px;cursor:pointer;font-family:var(--sans);}
+  .share-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .share-note{font-size:11.5px;color:var(--ink-dim);margin:10px 0 0;line-height:1.5;}
+
+  /* answer review */
+  .review-toggle-btn{width:100%;padding:12px;margin-top:16px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink-dim);font-weight:600;font-size:13.5px;cursor:pointer;}
+  .review-toggle-btn:hover{border-color:var(--teal);color:var(--teal);}
+  .review-list{margin-top:14px;}
+  .review-item{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:13px 14px;margin-bottom:8px;}
+  .review-item-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+  .review-item-q{font-size:13.5px;line-height:1.5;flex:1;}
+  .review-item-mark{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap;}
+  .review-item-mark.ok{color:var(--teal);}
+  .review-item-mark.no{color:var(--coral);}
+  .review-item-exp{font-size:12.5px;color:var(--ink-dim);margin-top:6px;line-height:1.55;}
 
   /* question card */
   .ticket{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 24px 22px;margin-bottom:16px;}
@@ -180,7 +230,15 @@
       <span class="pt-text"><b>Include PBQs</b> — mix in performance-based matching &amp; ordering items alongside multiple choice.</span>
     </label>
 
+    <span class="field-label">Your info (optional)</span>
+    <div class="examinee-row">
+      <input type="text" id="examineeName" placeholder="Name" autocomplete="name">
+      <input type="email" id="examineeEmail" placeholder="Email address" autocomplete="email">
+    </div>
+    <p class="examinee-note">Used to label your results and pre-fill the "email results" button after each drill. Stored only in this browser — never sent anywhere automatically.</p>
+
     <button class="start-btn" id="startBtn">Start drill</button>
+    <button class="history-link-btn" id="viewHistoryBtn">View past results</button>
   </div>
 
   <!-- QUIZ -->
@@ -188,6 +246,9 @@
 
   <!-- REPORT -->
   <div class="hidden" id="reportScreen"></div>
+
+  <!-- HISTORY -->
+  <div class="hidden" id="historyScreen"></div>
 
 </div>
 
@@ -2082,12 +2143,19 @@ let includePBQ = true;
 let quizSet = [];
 let currentIndex = 0;
 let locked = false;
-let results = []; // {domain, correct}
+let results = []; // {domain, correct, qLabel, qDomainName, explanation, extra}
+let quizStartTime = null;
+let examineeName = "";
+let examineeEmail = "";
+
+const HISTORY_KEY = 'sy0701_history_v1';
+const PROFILE_KEY = 'sy0701_profile_v1';
 
 /* ============ DOM refs ============ */
 const introScreen = document.getElementById('introScreen');
 const quizScreen = document.getElementById('quizScreen');
 const reportScreen = document.getElementById('reportScreen');
+const historyScreen = document.getElementById('historyScreen');
 const scanFill = document.getElementById('scanFill');
 const progressBadge = document.getElementById('progressBadge');
 const domainGrid = document.getElementById('domainGrid');
@@ -2096,6 +2164,45 @@ const availNote = document.getElementById('availNote');
 const countErr = document.getElementById('countErr');
 const pbqToggle = document.getElementById('pbqToggle');
 const startBtn = document.getElementById('startBtn');
+const examineeNameInput = document.getElementById('examineeName');
+const examineeEmailInput = document.getElementById('examineeEmail');
+const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+
+/* ============ LOCAL STORAGE HELPERS ============ */
+function loadProfile(){
+  try{
+    const raw = localStorage.getItem(PROFILE_KEY);
+    if(!raw) return;
+    const p = JSON.parse(raw);
+    if(p.name) examineeNameInput.value = p.name;
+    if(p.email) examineeEmailInput.value = p.email;
+  }catch(e){ /* ignore corrupted profile data */ }
+}
+function saveProfile(name, email){
+  try{
+    localStorage.setItem(PROFILE_KEY, JSON.stringify({name, email}));
+  }catch(e){ /* storage unavailable — silently skip persistence */ }
+}
+function loadHistory(){
+  try{
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+function saveHistoryEntry(entry){
+  try{
+    const hist = loadHistory();
+    hist.unshift(entry);
+    // cap history length to keep storage reasonable
+    const trimmed = hist.slice(0, 200);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(trimmed));
+  }catch(e){ /* storage full or unavailable — skip silently */ }
+}
+function clearHistory(){
+  try{ localStorage.removeItem(HISTORY_KEY); }catch(e){}
+}
+
+loadProfile();
 
 /* ============ SETUP SCREEN LOGIC ============ */
 function getPool(filter, withPBQ){
@@ -2153,9 +2260,14 @@ startBtn.addEventListener('click', () => {
     countInput.value = desired;
   }
 
+  examineeName = examineeNameInput.value.trim();
+  examineeEmail = examineeEmailInput.value.trim();
+  saveProfile(examineeName, examineeEmail);
+
   quizSet = shuffle(pool).slice(0, desired);
   currentIndex = 0;
   results = [];
+  quizStartTime = Date.now();
   introScreen.classList.add('hidden');
   quizScreen.classList.remove('hidden');
   renderQuestion();
@@ -2224,7 +2336,15 @@ function handleMCQAnswer(choiceIdx){
   locked = true;
   const item = quizSet[currentIndex];
   const isCorrect = choiceIdx === item.a;
-  results.push({domain: item.domain, correct: isCorrect});
+  results.push({
+    domain: item.domain,
+    correct: isCorrect,
+    qLabel: item.q,
+    qType: 'Multiple choice',
+    yourAnswer: item.opts[choiceIdx],
+    correctAnswer: item.opts[item.a],
+    explanation: item.exp
+  });
 
   const optBtns = [...quizScreen.querySelectorAll('.opt')];
   optBtns.forEach((btn, i) => {
@@ -2288,7 +2408,15 @@ function handleMatchAnswer(item, shuffledDefs){
   document.getElementById('checkBtn').disabled = true;
 
   const allCorrect = correctCount === item.pairs.length;
-  results.push({domain: item.domain, correct: allCorrect});
+  results.push({
+    domain: item.domain,
+    correct: allCorrect,
+    qLabel: item.prompt,
+    qType: 'PBQ · Matching',
+    yourAnswer: `${correctCount} of ${item.pairs.length} matched correctly`,
+    correctAnswer: null,
+    explanation: item.exp
+  });
   renderFeedback(allCorrect, item.exp, !allCorrect ? `You matched ${correctCount} of ${item.pairs.length} correctly. Correct pairings are shown above.` : null, !allCorrect && correctCount > 0);
 }
 
@@ -2345,8 +2473,16 @@ function handleOrderAnswer(item){
   document.getElementById('checkBtn').disabled = true;
 
   const allCorrect = correctCount === item.steps.length;
-  results.push({domain: item.domain, correct: allCorrect});
   const orderList = item.steps.map((s,i) => `${i+1}. ${s}`).join(' → ');
+  results.push({
+    domain: item.domain,
+    correct: allCorrect,
+    qLabel: item.prompt,
+    qType: 'PBQ · Ordering',
+    yourAnswer: `${correctCount} of ${item.steps.length} placed correctly`,
+    correctAnswer: orderList,
+    explanation: item.exp
+  });
   renderFeedback(allCorrect, item.exp, !allCorrect ? `You placed ${correctCount} of ${item.steps.length} correctly. Correct order: ${orderList}` : null, !allCorrect && correctCount > 0);
 }
 
@@ -2390,6 +2526,8 @@ function showReport(){
 
   const totalCorrect = results.filter(r => r.correct).length;
   const totalPct = Math.round((totalCorrect/results.length)*100);
+  const durationMs = quizStartTime ? (Date.now() - quizStartTime) : null;
+  const durationLabel = formatDuration(durationMs);
 
   const byDomain = {};
   results.forEach(r => {
@@ -2424,19 +2562,124 @@ function showReport(){
     ? `<ul>${weakDomains.map(d => `<li><strong>${d.domain}</strong> — scored ${d.pct}%. Review this domain's objectives before your next attempt.</li>`).join('')}</ul>`
     : `<p class="none">Every domain is at 80% or above. Keep timed full-length practice tests going to hold that level under exam pressure.</p>`;
 
+  const reviewListHtml = results.map((r, i) => `
+    <div class="review-item">
+      <div class="review-item-top">
+        <span class="review-item-q">#${i+1} · ${DOMAINS[r.domain].split('· ')[1] || DOMAINS[r.domain]}${r.qType ? ' · ' + r.qType : ''}<br>${r.qLabel}</span>
+        <span class="review-item-mark ${r.correct ? 'ok' : 'no'}">${r.correct ? '✓ Correct' : '✕ Incorrect'}</span>
+      </div>
+      <div class="review-item-exp">${r.explanation}</div>
+    </div>
+  `).join('');
+
   reportScreen.innerHTML = `
     <div class="report">
       <h2>Readiness report</h2>
       <div class="score-big">${totalPct}%</div>
-      <div class="score-sub">${totalCorrect} of ${results.length} answered correctly</div>
+      <div class="score-sub">${totalCorrect} of ${results.length} answered correctly${durationLabel ? ' · took ' + durationLabel : ''}</div>
       ${domainRows}
       <div class="focus-box">
         <h3>What to improve next</h3>
         ${focusHtml}
       </div>
+
+      <div class="share-box">
+        <h3>Save &amp; share results</h3>
+        <div class="share-row">
+          <input type="text" id="reportName" placeholder="Name" value="${escapeAttr(examineeName)}">
+          <input type="email" id="reportEmail" placeholder="Email address" value="${escapeAttr(examineeEmail)}">
+        </div>
+        <div class="share-btns">
+          <button class="share-btn" id="emailResultsBtn">Email results</button>
+          <button class="share-btn" id="copyResultsBtn">Copy summary</button>
+        </div>
+        <p class="share-note">"Email results" opens your device's default email app with your results pre-filled — nothing is sent automatically or transmitted to us. Your results are also saved locally in this browser under "View past results" on the setup screen.</p>
+      </div>
+
+      <button class="review-toggle-btn" id="toggleReviewBtn">Show detailed answer review (${results.length} questions)</button>
+      <div class="review-list hidden" id="reviewList">${reviewListHtml}</div>
+
       <button class="restart-btn" id="restartBtn">Run another drill</button>
     </div>
   `;
+
+  // Persist this attempt to local history
+  saveHistoryEntry({
+    ts: Date.now(),
+    name: examineeName,
+    email: examineeEmail,
+    domainFilter: domainFilter,
+    totalCorrect: totalCorrect,
+    totalQuestions: results.length,
+    totalPct: totalPct,
+    durationMs: durationMs,
+    byDomain: orderedDomainKeys.map(dKey => ({
+      domain: DOMAINS[dKey],
+      correct: byDomain[dKey].correct,
+      total: byDomain[dKey].total
+    }))
+  });
+
+  document.getElementById('toggleReviewBtn').addEventListener('click', (e) => {
+    const list = document.getElementById('reviewList');
+    const nowHidden = list.classList.toggle('hidden');
+    e.target.textContent = nowHidden
+      ? `Show detailed answer review (${results.length} questions)`
+      : `Hide detailed answer review`;
+  });
+
+  document.getElementById('emailResultsBtn').addEventListener('click', () => {
+    const name = document.getElementById('reportName').value.trim();
+    const email = document.getElementById('reportEmail').value.trim();
+    const subject = `Security+ Practice Results — ${totalPct}% (${totalCorrect}/${results.length})`;
+    const lines = [];
+    lines.push(`Security+ SY0-701 Practice Drill Results`);
+    if(name) lines.push(`Name: ${name}`);
+    lines.push(`Date: ${new Date().toLocaleString()}`);
+    lines.push(`Score: ${totalPct}% (${totalCorrect} of ${results.length} correct)`);
+    if(durationLabel) lines.push(`Time taken: ${durationLabel}`);
+    lines.push(``);
+    lines.push(`Domain breakdown:`);
+    orderedDomainKeys.forEach(dKey => {
+      const s = byDomain[dKey];
+      const pct = Math.round((s.correct/s.total)*100);
+      lines.push(`- ${DOMAINS[dKey]}: ${s.correct}/${s.total} (${pct}%)`);
+    });
+    if(weakDomains.length){
+      lines.push(``);
+      lines.push(`Focus areas: ${weakDomains.map(d => d.domain).join(', ')}`);
+    }
+    const body = lines.join('\n');
+    const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  });
+
+  document.getElementById('copyResultsBtn').addEventListener('click', async () => {
+    const name = document.getElementById('reportName').value.trim();
+    const lines = [];
+    lines.push(`Security+ SY0-701 Practice Drill Results`);
+    if(name) lines.push(`Name: ${name}`);
+    lines.push(`Date: ${new Date().toLocaleString()}`);
+    lines.push(`Score: ${totalPct}% (${totalCorrect} of ${results.length} correct)`);
+    if(durationLabel) lines.push(`Time taken: ${durationLabel}`);
+    lines.push(``);
+    lines.push(`Domain breakdown:`);
+    orderedDomainKeys.forEach(dKey => {
+      const s = byDomain[dKey];
+      const pct = Math.round((s.correct/s.total)*100);
+      lines.push(`- ${DOMAINS[dKey]}: ${s.correct}/${s.total} (${pct}%)`);
+    });
+    const text = lines.join('\n');
+    const btn = document.getElementById('copyResultsBtn');
+    try{
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1800);
+    }catch(e){
+      btn.textContent = 'Copy failed — select text manually';
+    }
+  });
 
   document.getElementById('restartBtn').addEventListener('click', () => {
     reportScreen.classList.add('hidden');
@@ -2445,6 +2688,77 @@ function showReport(){
     progressBadge.textContent = 'setup';
     updateAvailability();
   });
+}
+
+/* ============ HELPERS: escaping, duration formatting ============ */
+function escapeAttr(str){
+  return String(str || "").replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function formatDuration(ms){
+  if(ms === null || ms === undefined || isNaN(ms) || ms < 0) return null;
+  const totalSec = Math.round(ms/1000);
+  const mins = Math.floor(totalSec/60);
+  const secs = totalSec % 60;
+  if(mins === 0) return `${secs}s`;
+  return `${mins}m ${secs}s`;
+}
+
+/* ============ HISTORY SCREEN ============ */
+viewHistoryBtn.addEventListener('click', () => {
+  introScreen.classList.add('hidden');
+  renderHistoryScreen();
+  historyScreen.classList.remove('hidden');
+});
+
+function renderHistoryScreen(){
+  const hist = loadHistory();
+
+  const bodyHtml = hist.length === 0
+    ? `<div class="history-empty">No past results yet. Complete a drill and it'll show up here.</div>`
+    : hist.map(entry => {
+        const date = new Date(entry.ts).toLocaleString();
+        const durationLabel = formatDuration(entry.durationMs);
+        const domainFilterLabel = entry.domainFilter === 'all' ? 'All domains' : `Domain ${entry.domainFilter}`;
+        const chips = (entry.byDomain || []).map(d => {
+          const pct = Math.round((d.correct/d.total)*100);
+          return `<span class="history-chip">${d.domain.split('· ')[1] || d.domain}: ${pct}%</span>`;
+        }).join('');
+        return `
+          <div class="history-entry">
+            <div class="history-entry-top">
+              <span class="history-entry-score">${entry.totalPct}%</span>
+              <span class="history-entry-meta">${date}</span>
+            </div>
+            <div class="history-entry-sub">${entry.name ? entry.name + ' · ' : ''}${entry.totalCorrect}/${entry.totalQuestions} correct · ${domainFilterLabel}${durationLabel ? ' · ' + durationLabel : ''}</div>
+            <div class="history-entry-domains">${chips}</div>
+          </div>
+        `;
+      }).join('');
+
+  historyScreen.innerHTML = `
+    <div class="report">
+      <div class="history-header">
+        <h2>Past results</h2>
+        <button class="history-back-btn" id="historyBackBtn">← Back</button>
+      </div>
+      <p class="examinee-note" style="margin-bottom:18px;">Stored only in this browser on this device. Clearing your browser data will also clear this history.</p>
+      ${bodyHtml}
+      ${hist.length > 0 ? `<button class="clear-history-btn" id="clearHistoryBtn">Clear all history</button>` : ''}
+    </div>
+  `;
+
+  document.getElementById('historyBackBtn').addEventListener('click', () => {
+    historyScreen.classList.add('hidden');
+    introScreen.classList.remove('hidden');
+  });
+
+  const clearBtn = document.getElementById('clearHistoryBtn');
+  if(clearBtn){
+    clearBtn.addEventListener('click', () => {
+      clearHistory();
+      renderHistoryScreen();
+    });
+  }
 }
 </script>
 </body>
