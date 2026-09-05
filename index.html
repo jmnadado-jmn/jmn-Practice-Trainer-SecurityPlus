@@ -210,11 +210,24 @@
   </div>
   <div class="scan"><div class="scan-fill" id="scanFill"></div></div>
 
-  <!-- INTRO / SETUP -->
-  <div class="intro" id="introScreen">
+  <!-- WELCOME (name/email) -->
+  <div class="intro" id="welcomeScreen">
     <h1>Every answer gets checked the moment you pick it.</h1>
     <p>Pick an option and you'll instantly see whether it's right, with an explanation of why. Performance-based questions (matching and ordering) get graded the same way. At the end you get a readiness report broken down by domain.</p>
 
+    <span class="field-label">Your info (optional)</span>
+    <div class="examinee-row">
+      <input type="text" id="examineeName" placeholder="Name" autocomplete="name">
+      <input type="email" id="examineeEmail" placeholder="Email address" autocomplete="email">
+    </div>
+    <p class="examinee-note">Used to label your results and pre-fill the "email results" button after each drill. Stored only in this browser — never sent anywhere automatically.</p>
+
+    <button class="start-btn" id="continueBtn">Continue</button>
+    <button class="history-link-btn" id="viewHistoryBtn">View past results</button>
+  </div>
+
+  <!-- SETUP (domain / count / PBQ) -->
+  <div class="hidden intro" id="introScreen">
     <span class="field-label">Domain focus</span>
     <div class="domain-grid" id="domainGrid"></div>
 
@@ -230,15 +243,8 @@
       <span class="pt-text"><b>Include PBQs</b> — mix in performance-based matching &amp; ordering items alongside multiple choice.</span>
     </label>
 
-    <span class="field-label">Your info (optional)</span>
-    <div class="examinee-row">
-      <input type="text" id="examineeName" placeholder="Name" autocomplete="name">
-      <input type="email" id="examineeEmail" placeholder="Email address" autocomplete="email">
-    </div>
-    <p class="examinee-note">Used to label your results and pre-fill the "email results" button after each drill. Stored only in this browser — never sent anywhere automatically.</p>
-
     <button class="start-btn" id="startBtn">Start drill</button>
-    <button class="history-link-btn" id="viewHistoryBtn">View past results</button>
+    <button class="history-link-btn" id="backToWelcomeBtn">← Back</button>
   </div>
 
   <!-- QUIZ -->
@@ -2152,6 +2158,7 @@ const HISTORY_KEY = 'sy0701_history_v1';
 const PROFILE_KEY = 'sy0701_profile_v1';
 
 /* ============ DOM refs ============ */
+const welcomeScreen = document.getElementById('welcomeScreen');
 const introScreen = document.getElementById('introScreen');
 const quizScreen = document.getElementById('quizScreen');
 const reportScreen = document.getElementById('reportScreen');
@@ -2164,6 +2171,8 @@ const availNote = document.getElementById('availNote');
 const countErr = document.getElementById('countErr');
 const pbqToggle = document.getElementById('pbqToggle');
 const startBtn = document.getElementById('startBtn');
+const continueBtn = document.getElementById('continueBtn');
+const backToWelcomeBtn = document.getElementById('backToWelcomeBtn');
 const examineeNameInput = document.getElementById('examineeName');
 const examineeEmailInput = document.getElementById('examineeEmail');
 const viewHistoryBtn = document.getElementById('viewHistoryBtn');
@@ -2203,6 +2212,19 @@ function clearHistory(){
 }
 
 loadProfile();
+
+continueBtn.addEventListener('click', () => {
+  examineeName = examineeNameInput.value.trim();
+  examineeEmail = examineeEmailInput.value.trim();
+  saveProfile(examineeName, examineeEmail);
+  welcomeScreen.classList.add('hidden');
+  introScreen.classList.remove('hidden');
+});
+
+backToWelcomeBtn.addEventListener('click', () => {
+  introScreen.classList.add('hidden');
+  welcomeScreen.classList.remove('hidden');
+});
 
 /* ============ SETUP SCREEN LOGIC ============ */
 function getPool(filter, withPBQ){
@@ -2259,10 +2281,6 @@ startBtn.addEventListener('click', () => {
     desired = pool.length;
     countInput.value = desired;
   }
-
-  examineeName = examineeNameInput.value.trim();
-  examineeEmail = examineeEmailInput.value.trim();
-  saveProfile(examineeName, examineeEmail);
 
   quizSet = shuffle(pool).slice(0, desired);
   currentIndex = 0;
@@ -2593,7 +2611,8 @@ function showReport(){
           <button class="share-btn" id="emailResultsBtn">Email results</button>
           <button class="share-btn" id="copyResultsBtn">Copy summary</button>
         </div>
-        <p class="share-note">"Email results" opens your device's default email app with your results pre-filled — nothing is sent automatically or transmitted to us. Your results are also saved locally in this browser under "View past results" on the setup screen.</p>
+        <p class="share-note">"Email results" opens your device's default email app with your results pre-filled — nothing is sent automatically or transmitted to us. Your results are also saved locally in this browser under "View past results".</p>
+        <p class="share-note hidden" id="emailNote" style="color:var(--amber);"></p>
       </div>
 
       <button class="review-toggle-btn" id="toggleReviewBtn">Show detailed answer review (${results.length} questions)</button>
@@ -2650,8 +2669,41 @@ function showReport(){
       lines.push(`Focus areas: ${weakDomains.map(d => d.domain).join(', ')}`);
     }
     const body = lines.join('\n');
-    const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    // Don't URL-encode the address itself (some mail clients mishandle an
+    // encoded @), only the subject and body.
+    const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open via a temporary anchor with target="_blank" rather than
+    // window.location.href — sandboxed preview frames (like an in-chat file
+    // preview) generally block same-frame navigation to non-http schemes,
+    // but are more likely to allow a popup/new-tab request, which is what
+    // actually invokes the OS's default mail app without navigating away
+    // from the page itself.
+    let blocked = false;
+    try{
+      const a = document.createElement('a');
+      a.href = mailto;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }catch(e){
+      blocked = true;
+    }
+
+    // If we're inside an iframe (e.g. a preview pane), mailto navigation is
+    // commonly blocked by the sandbox with no way to detect it directly, so
+    // proactively tell the user what to do instead.
+    const inFrame = (() => { try { return window.self !== window.top; } catch(e){ return true; } })();
+    const noteEl = document.getElementById('emailNote');
+    if(blocked || inFrame){
+      noteEl.textContent = "If nothing opened: you're likely viewing this inside a preview pane that blocks email links. Download the file and open it directly in your browser, then try again — or use \"Copy summary\" now and paste it into an email yourself.";
+      noteEl.classList.remove('hidden');
+    } else {
+      noteEl.classList.add('hidden');
+    }
   });
 
   document.getElementById('copyResultsBtn').addEventListener('click', async () => {
@@ -2705,7 +2757,7 @@ function formatDuration(ms){
 
 /* ============ HISTORY SCREEN ============ */
 viewHistoryBtn.addEventListener('click', () => {
-  introScreen.classList.add('hidden');
+  welcomeScreen.classList.add('hidden');
   renderHistoryScreen();
   historyScreen.classList.remove('hidden');
 });
@@ -2749,7 +2801,7 @@ function renderHistoryScreen(){
 
   document.getElementById('historyBackBtn').addEventListener('click', () => {
     historyScreen.classList.add('hidden');
-    introScreen.classList.remove('hidden');
+    welcomeScreen.classList.remove('hidden');
   });
 
   const clearBtn = document.getElementById('clearHistoryBtn');
